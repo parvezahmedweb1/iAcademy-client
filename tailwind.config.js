@@ -8,7 +8,12 @@ module.exports = {
         lg: "3rem",
       },
     },
-    extend: {},
+    extend: {
+      colors: {
+        btnHover: "#F7D3C1",
+        nav: "#3391A4",
+      },
+    },
   },
   plugins: [],
 };
