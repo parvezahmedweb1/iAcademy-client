@@ -26,7 +26,7 @@ const SignIn = () => {
                     htmlFor="username"
                     className="block text-sm text-white-800 dark:text-gray-200"
                   >
-                    Email <sup className="text-red-500">*</sup>
+                    Email <sup className="text-yellow-400">*</sup>
                   </label>
                   <input
                     type="email"
@@ -41,7 +41,7 @@ const SignIn = () => {
                       htmlFor="password"
                       className="block text-sm text-white dark:text-gray-200"
                     >
-                      Password <sup className="text-red-500">*</sup>
+                      Password <sup className="text-yellow-400">*</sup>
                     </label>
                     <a
                       href="#/"

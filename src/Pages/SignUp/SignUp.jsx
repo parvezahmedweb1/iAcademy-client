@@ -1,8 +1,52 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useContext, useState } from "react";
+import { BiErrorCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import signupImg from "../../assets/signup.json";
+import { AuthContext } from "../../context/UserContext";
 const SignUp = () => {
+  const { registerEmailAndPassword } = useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [err, setErr] = useState({
+    password: "",
+    firebaseErr: "",
+  });
+  // ? handleUserName
+  const handleUserName = (e) => {
+    setUserInfo({ ...userInfo, name: e.target.value });
+  };
+  // ? handleUserEmail
+  const handleUserEmail = (e) => {
+    setUserInfo({ ...userInfo, email: e.target.value });
+  };
+  // ? handleUserPassword
+  const handleUserPassword = (e) => {
+    if (e.target.value.length < 6) {
+      setErr({ ...err, password: "Must be at least 6 characters" });
+      setUserInfo({ ...userInfo, password: e.target.value });
+    } else {
+      setErr({ ...err, password: "" });
+      setUserInfo({ ...userInfo, password: e.target.value });
+    }
+  };
+  // ? handleRegisterSubmit
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    // ? create new user
+    registerEmailAndPassword(userInfo.email, userInfo.password)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Successfully Created user");
+        console.log(user);
+      })
+      .catch((err) => setErr({ ...err, firebaseErr: err.message }));
+  };
   return (
     <section className="h-screen">
       <div className="container mx-auto h-full ">
@@ -18,16 +62,16 @@ const SignUp = () => {
               <h1 className="text-3xl font-semibold text-center text-white dark:text-white">
                 Register
               </h1>
-
-              <form className="mt-6">
+              <form onSubmit={handleRegisterSubmit} className="mt-6">
                 <div>
                   <label
                     htmlFor="userName"
                     className="block text-sm text-white-800 dark:text-gray-200"
                   >
-                    Username <sup className="text-red-500">*</sup>
+                    Username <sup className="text-yellow-400">*</sup>
                   </label>
                   <input
+                    onBlur={handleUserName}
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
@@ -38,9 +82,10 @@ const SignUp = () => {
                     htmlFor="email"
                     className="block text-sm text-white-800 dark:text-gray-200"
                   >
-                    Email <sup className="text-red-500">*</sup>
+                    Email <sup className="text-yellow-400">*</sup>
                   </label>
                   <input
+                    onBlur={handleUserEmail}
                     type="email"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
@@ -53,25 +98,37 @@ const SignUp = () => {
                       htmlFor="password"
                       className="block text-sm text-white dark:text-gray-200"
                     >
-                      Password <sup className="text-red-500">*</sup>
+                      Password <sup className="text-yellow-400">*</sup>
                     </label>
-                    <a
-                      href="#/"
-                      className="text-xs text-white dark:text-gray-400 hover:underline"
-                    >
+                    <span className="text-xs text-white dark:text-gray-400">
                       Forget Password?
-                    </a>
+                    </span>
                   </div>
 
                   <input
+                    onChange={handleUserPassword}
                     type="password"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
                   />
+                  {err.password && (
+                    <small className="text-xs flex items-center mt-2 text-yellow-400 dark:text-gray-400 ">
+                      <BiErrorCircle className="mr-1" />
+                      {err.password}
+                    </small>
+                  )}
+                  {err.firebaseErr && (
+                    <span className="text-xs mt-2 flex items-center text-red-900 dark:text-gray-400">
+                      <BiErrorCircle className="mr-1" />
+                      {err.firebaseErr}
+                    </span>
+                  )}
                 </div>
-
-                <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide bg-btnHover transition-colors duration-300 transform text-black font-bold rounded-full hover:bg-white ">
+                <div className="mt-4">
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2 tracking-wide bg-btnHover transition-colors duration-300 transform text-black font-bold rounded-full hover:bg-white "
+                  >
                     Sign Up
                   </button>
                 </div>
