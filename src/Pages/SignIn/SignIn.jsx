@@ -1,7 +1,7 @@
 import Lottie from "lottie-react";
 import React from "react";
 import { Link } from "react-router-dom";
-import loginImg from "../../assets/login.json";
+import loginImg from "../../assets/login-signup/login.json";
 import "./SignIn.css";
 const SignIn = () => {
   return (

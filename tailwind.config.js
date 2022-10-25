@@ -12,6 +12,7 @@ module.exports = {
       colors: {
         btnHover: "#F7D3C1",
         nav: "#3391A4",
+        step: "#3C8AAC",
       },
     },
   },

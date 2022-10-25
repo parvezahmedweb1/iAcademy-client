@@ -4,7 +4,7 @@ import { BiErrorCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import signupImg from "../../assets/signup.json";
+import signupImg from "../../assets/login-signup/signup.json";
 import { AuthContext } from "../../context/UserContext";
 const SignUp = () => {
   const { registerEmailAndPassword, updateUserProfile, emailVerification } =
