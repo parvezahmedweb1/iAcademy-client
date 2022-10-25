@@ -1,5 +1,5 @@
 #header {
   background-image: url("../../assets/navbg.svg");
-  /* background-size: cover; */
-  background-position: center;
+  background-position: left;
+  object-fit: cover;
 }

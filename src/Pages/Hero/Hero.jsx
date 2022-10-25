@@ -1,4 +1,5 @@
 import React from "react";
+import { Typewriter } from "react-simple-typewriter";
 import hero from "../../assets/hero_illustr.svg";
 import "./Hero.css";
 const Hero = () => {
@@ -6,8 +7,24 @@ const Hero = () => {
     <section id="hero" className="md:h-[90vh] h-[50vh]">
       <div className="container mx-auto h-full flex justify-center md:justify-between items-center">
         <div className="text-white text-center md:text-left">
-          <h1 className="text-4xl font-bold">
-            Premium Graphic <br /> Design Tutorials
+          <h1 className="text-5xl font-bold">
+            iAcademy Premium <br />
+            <Typewriter
+              words={[
+                "Web Development",
+                "Graphic  Design",
+                "Digital Marketing",
+                "Facebook Marketing",
+              ]}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1000}
+            />
+            <br />
+            Tutorials
           </h1>
           <p className="my-3">
             With over 1200 courses in 18 subjects, you're guaranteed <br />

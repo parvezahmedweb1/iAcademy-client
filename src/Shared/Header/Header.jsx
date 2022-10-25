@@ -7,15 +7,14 @@ const Header = () => {
     <header id="header" className="h-16 flex items-center">
       <div className="container mx-auto text-white">
         <div className="flex justify-between items-center z-20">
-          <a className="" href="/">
-            {/* <img src={logo} alt="" /> */}
+          <Link to="/">
             <span className="text-xl font-bold">iAcademy</span>
-          </a>
+          </Link>
           {/* nav */}
           <nav>
             <ul className="hidden md:flex space-x-7">
               <li>
-                <a href="/home">Home</a>
+                <Link to="/home">Home</Link>
               </li>
               <li>
                 <a href="/courses">Courses</a>

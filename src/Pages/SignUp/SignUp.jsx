@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 import signupImg from "../../assets/signup.json";
 import { AuthContext } from "../../context/UserContext";
 const SignUp = () => {
-  const { registerEmailAndPassword } = useContext(AuthContext);
+  const { registerEmailAndPassword, updateUserProfile, emailVerification } =
+    useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -41,9 +42,16 @@ const SignUp = () => {
     // ? create new user
     registerEmailAndPassword(userInfo.email, userInfo.password)
       .then((result) => {
-        const user = result.user;
         toast.success("Successfully Created user");
-        console.log(user);
+        // ? update user profile
+        updateUserProfile(userInfo.name)
+          .then(() => {
+            // ? email verification
+            emailVerification().then(() => {
+              toast.info("Please checked you email verification.");
+            });
+          })
+          .catch((err) => {});
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
   };
