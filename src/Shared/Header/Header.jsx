@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import NavMobile from "../../Pages/Others/NavMobile";
 import "./Header.css";
 const Header = () => {
@@ -32,9 +33,11 @@ const Header = () => {
           </nav>
           {/* info */}
           <div className="md:block hidden">
-            <button className="bg-white text-black px-10 py-2 rounded-full font-bold hover:bg-btnHover transition-all delay-75">
-              Sign In
-            </button>
+            <Link to="/login">
+              <button className="bg-white text-black px-10 py-2 rounded-full font-bold hover:bg-btnHover transition-all delay-75">
+                Sign In
+              </button>
+            </Link>
           </div>
           {/* Nav mobile */}
           <NavMobile />
