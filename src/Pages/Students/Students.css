@@ -1,0 +1,11 @@
+.students {
+  background-image: url("../../assets/hero.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+.logo {
+  background-image: url("../../assets/hero_numb.svg");
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-position: center;
+}
