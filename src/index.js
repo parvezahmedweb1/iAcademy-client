@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <UserContext>
-      <ToastContainer position="top-center" autoClose={500} />
+      <ToastContainer position="top-center" autoClose={1500} />
       <App />
     </UserContext>
   </>

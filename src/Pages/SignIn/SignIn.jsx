@@ -1,9 +1,67 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { useContext, useState } from "react";
+import { BiErrorCircle } from "react-icons/bi";
+import { FaGithub } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import loginImg from "../../assets/login-signup/login.json";
+import { AuthContext } from "../../context/UserContext";
 import "./SignIn.css";
 const SignIn = () => {
+  const { loginWithEmailAndPassword, googleSignIn, githubSignIn } =
+    useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const [err, setErr] = useState({
+    password: "",
+    firebaseErr: "",
+  });
+  // ? handleUserEmail
+  const handleUserEmail = (e) => {
+    setUserInfo({ ...userInfo, email: e.target.value });
+  };
+  // ? handleUserPassword
+  const handleUserPassword = (e) => {
+    if (e.target.value.length < 6) {
+      setErr({ ...err, password: "Must be at least 6 characters" });
+      setUserInfo({ ...userInfo, password: e.target.value });
+    } else {
+      setErr({ ...err, password: "" });
+      setUserInfo({ ...userInfo, password: e.target.value });
+    }
+  };
+  // ? handleLogin
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    // ? login user
+    loginWithEmailAndPassword(userInfo.email, userInfo.password)
+      .then((result) => {
+        const user = result.user;
+        toast.success("Successfully User Login");
+        console.log(user);
+      })
+      .catch((err) => setErr({ ...err, firebaseErr: err.message }));
+    form.reset();
+  };
+  // ? google sign up
+  const handleGoogleSignUp = () => {
+    googleSignIn()
+      .then((result) => {
+        toast.success("Successfully Google SignUp user");
+      })
+      .catch((err) => setErr({ ...err, firebaseErr: err.message }));
+  };
+  // ? github sign up
+  const handleGithubSignUp = () => {
+    githubSignIn()
+      .then((result) => {
+        toast.success("Successfully Github SignUp user");
+      })
+      .catch((err) => setErr({ ...err, firebaseErr: err.message }));
+  };
   return (
     <section className="h-screen">
       <div className="container mx-auto h-full ">
@@ -20,7 +78,7 @@ const SignIn = () => {
                 SIGN IN
               </h1>
 
-              <form className="mt-6">
+              <form onSubmit={handleLogin} className="mt-6">
                 <div>
                   <label
                     htmlFor="username"
@@ -30,6 +88,8 @@ const SignIn = () => {
                   </label>
                   <input
                     type="email"
+                    placeholder="Email"
+                    onBlur={handleUserEmail}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
                   />
@@ -43,19 +103,30 @@ const SignIn = () => {
                     >
                       Password <sup className="text-yellow-400">*</sup>
                     </label>
-                    <a
-                      href="#/"
-                      className="text-xs text-white dark:text-gray-400 hover:underline"
-                    >
+                    <span className="text-xs text-white dark:text-gray-400 hover:underline">
                       Forget Password?
-                    </a>
+                    </span>
                   </div>
 
                   <input
                     type="password"
+                    placeholder="Password"
+                    onChange={handleUserPassword}
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
                   />
+                  {err.password && (
+                    <small className="text-xs flex items-center mt-2 text-yellow-400 dark:text-gray-400 ">
+                      <BiErrorCircle className="mr-1" />
+                      {err.password}
+                    </small>
+                  )}
+                  {err.firebaseErr && (
+                    <span className="text-xs mt-2 flex items-center text-red-900 dark:text-gray-400">
+                      <BiErrorCircle className="mr-1" />
+                      {err.firebaseErr}
+                    </span>
+                  )}
                 </div>
 
                 <div className="mt-6">
@@ -77,6 +148,7 @@ const SignIn = () => {
 
               <div className="flex items-center mt-6 -mx-2">
                 <button
+                  onClick={handleGoogleSignUp}
                   type="button"
                   className="flex items-center justify-center w-full px-6 py-2 mx-2 text-sm font-bold text-black transition-colors duration-300 transform bg-btnHover  hover:bg-white rounded-full focus:outline-none"
                 >
@@ -92,14 +164,12 @@ const SignIn = () => {
                   </span>
                 </button>
 
-                <a
-                  href="#/"
+                <button
+                  onClick={handleGithubSignUp}
                   className="p-2 mx-2 text-sm font-medium bg-btnHover transition-colors duration-300 transform  rounded-md hover:bg-white text-black"
                 >
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path>
-                  </svg>
-                </a>
+                  <FaGithub size={20} />
+                </button>
               </div>
 
               <p className="mt-8 text-xs font-light text-center text-white">

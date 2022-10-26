@@ -1,14 +1,19 @@
 import Lottie from "lottie-react";
 import React, { useContext, useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
+import { FaGithub } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import signupImg from "../../assets/login-signup/signup.json";
 import { AuthContext } from "../../context/UserContext";
 const SignUp = () => {
-  const { registerEmailAndPassword, updateUserProfile, emailVerification } =
-    useContext(AuthContext);
+  const {
+    registerEmailAndPassword,
+    updateUserProfile,
+    emailVerification,
+    googleSignIn,
+    githubSignIn,
+  } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -38,11 +43,13 @@ const SignUp = () => {
   };
   // ? handleRegisterSubmit
   const handleRegisterSubmit = (e) => {
+    const form = e.target;
     e.preventDefault();
     // ? create new user
     registerEmailAndPassword(userInfo.email, userInfo.password)
       .then((result) => {
         toast.success("Successfully Created user");
+        setErr({ ...err, firebaseErr: "" });
         // ? update user profile
         updateUserProfile(userInfo.name)
           .then(() => {
@@ -52,6 +59,23 @@ const SignUp = () => {
             });
           })
           .catch((err) => {});
+      })
+      .catch((err) => setErr({ ...err, firebaseErr: err.message }));
+    form.reset();
+  };
+  // ? google sign up
+  const handleGoogleSignUp = () => {
+    googleSignIn()
+      .then((result) => {
+        toast.success("Successfully Google SignUp user");
+      })
+      .catch((err) => setErr({ ...err, firebaseErr: err.message }));
+  };
+  // ? github sign up
+  const handleGithubSignUp = () => {
+    githubSignIn()
+      .then((result) => {
+        toast.success("Successfully Github SignUp user");
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
   };
@@ -81,6 +105,7 @@ const SignUp = () => {
                   <input
                     onBlur={handleUserName}
                     type="text"
+                    placeholder="Username"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
                   />
@@ -95,6 +120,7 @@ const SignUp = () => {
                   <input
                     onBlur={handleUserEmail}
                     type="email"
+                    placeholder="Email"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
                   />
@@ -116,6 +142,7 @@ const SignUp = () => {
                   <input
                     onChange={handleUserPassword}
                     type="password"
+                    placeholder="Password"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     required
                   />
@@ -154,6 +181,7 @@ const SignUp = () => {
 
               <div className="flex items-center mt-6 -mx-2">
                 <button
+                  onClick={handleGoogleSignUp}
                   type="button"
                   className="flex items-center justify-center w-full px-6 py-2 mx-2 text-sm font-bold text-black transition-colors duration-300 transform bg-btnHover  hover:bg-white rounded-full focus:outline-none"
                 >
@@ -169,14 +197,12 @@ const SignUp = () => {
                   </span>
                 </button>
 
-                <a
-                  href="#/"
+                <button
+                  onClick={handleGithubSignUp}
                   className="p-2 mx-2 text-sm font-medium bg-btnHover transition-colors duration-300 transform  rounded-md hover:bg-white text-black"
                 >
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M23.954 4.569c-.885.389-1.83.654-2.825.775 1.014-.611 1.794-1.574 2.163-2.723-.951.555-2.005.959-3.127 1.184-.896-.959-2.173-1.559-3.591-1.559-2.717 0-4.92 2.203-4.92 4.917 0 .39.045.765.127 1.124C7.691 8.094 4.066 6.13 1.64 3.161c-.427.722-.666 1.561-.666 2.475 0 1.71.87 3.213 2.188 4.096-.807-.026-1.566-.248-2.228-.616v.061c0 2.385 1.693 4.374 3.946 4.827-.413.111-.849.171-1.296.171-.314 0-.615-.03-.916-.086.631 1.953 2.445 3.377 4.604 3.417-1.68 1.319-3.809 2.105-6.102 2.105-.39 0-.779-.023-1.17-.067 2.189 1.394 4.768 2.209 7.557 2.209 9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63.961-.689 1.8-1.56 2.46-2.548l-.047-.02z"></path>
-                  </svg>
-                </a>
+                  <FaGithub size={20} />
+                </button>
               </div>
 
               <p className="mt-8 text-xs font-light text-center text-white">

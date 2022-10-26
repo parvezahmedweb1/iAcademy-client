@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/UserContext";
 import NavMobile from "../../Pages/Others/NavMobile";
 import "./Header.css";
 const Header = () => {
+  const { user, logout } = useContext(AuthContext);
   return (
     <header id="header" className="h-16 flex items-center">
       <div className="container mx-auto text-white">
@@ -32,11 +34,20 @@ const Header = () => {
           </nav>
           {/* info */}
           <div className="md:block hidden">
-            <Link to="/login">
-              <button className="bg-white text-black px-10 py-2 rounded-full font-bold hover:bg-btnHover transition-all delay-75">
-                Sign In
+            {user?.uid ? (
+              <button
+                onClick={logout}
+                className="bg-white text-black px-10 py-2 rounded-full font-bold hover:bg-btnHover transition-all delay-75"
+              >
+                Logout
               </button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <button className="bg-white text-black px-10 py-2 rounded-full font-bold hover:bg-btnHover transition-all delay-75">
+                  Sign In
+                </button>
+              </Link>
+            )}
           </div>
           {/* Nav mobile */}
           <NavMobile />
