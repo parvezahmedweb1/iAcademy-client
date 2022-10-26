@@ -1,5 +1,6 @@
 import React from "react";
 import CoursesStrategy from "../CoursesStrategy/CoursesStrategy";
+import Faq from "../Faq/Faq";
 import Hero from "../Hero/Hero";
 import Students from "../Students/Students";
 
@@ -9,6 +10,7 @@ const Home = () => {
       <Hero />
       <CoursesStrategy />
       <Students />
+      <Faq />
     </>
   );
 };
