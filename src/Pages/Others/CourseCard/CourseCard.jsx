@@ -1,8 +1,9 @@
 import React from "react";
 import { BsFillStarFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import "./CourseCard.css";
 const CourseCard = ({ course }) => {
-  const { img, categoryName, instructor, price, name } = course;
+  const { img, categoryName, instructor, price, name, _id } = course;
   return (
     <article className="overflow-hidden rounded-lg shadow transition hover:shadow-lg">
       <div className=" h-56 w-full course-img">
@@ -28,9 +29,11 @@ const CourseCard = ({ course }) => {
           <p className="font-extrabold text-gray-700">${price}</p>
         </div>
 
-        <button className="bg-btnHover text-gray-700 w-full px-10 py-2 mt-4 rounded-full font-bold hover:bg-step hover:text-white transition-all delay-75">
-          Get Premium
-        </button>
+        <Link to={`/details/${_id}`}>
+          <button className="bg-btnHover text-gray-700 w-full px-10 py-2 mt-4 rounded-full font-bold hover:bg-step hover:text-white transition-all delay-75">
+            Get Premium
+          </button>
+        </Link>
       </div>
     </article>
   );
