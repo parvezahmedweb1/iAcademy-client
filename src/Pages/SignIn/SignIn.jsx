@@ -2,7 +2,7 @@ import Lottie from "lottie-react";
 import React, { useContext, useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 import { FaGithub } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import loginImg from "../../assets/login-signup/login.json";
 import { AuthContext } from "../../context/UserContext";
@@ -10,6 +10,9 @@ import "./SignIn.css";
 const SignIn = () => {
   const { loginWithEmailAndPassword, googleSignIn, githubSignIn } =
     useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -39,9 +42,8 @@ const SignIn = () => {
     // ? login user
     loginWithEmailAndPassword(userInfo.email, userInfo.password)
       .then((result) => {
-        const user = result.user;
         toast.success("Successfully User Login");
-        console.log(user);
+        navigate(from, { replace: true });
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
     form.reset();
@@ -51,6 +53,7 @@ const SignIn = () => {
     googleSignIn()
       .then((result) => {
         toast.success("Successfully Google SignUp user");
+        navigate(from, { replace: true });
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
   };
@@ -59,6 +62,7 @@ const SignIn = () => {
     githubSignIn()
       .then((result) => {
         toast.success("Successfully Github SignUp user");
+        navigate(from, { replace: true });
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
   };

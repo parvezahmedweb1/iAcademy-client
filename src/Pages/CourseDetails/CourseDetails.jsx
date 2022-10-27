@@ -19,14 +19,20 @@ const CourseDetails = () => {
     courseType,
     requirements,
     price,
+    _id,
   } = courseDetail;
   console.log(courseDetail);
   return (
     <section className="mb-20 mt-8">
       <div className="container mx-auto">
-        <h2 className="text-3xl md:text-4xl text-gray-700 font-bold mb-10">
-          {name}
-        </h2>
+        <div className="flex  flex-col md:flex-row  justify-between items-center mb-10">
+          <h2 className="text-3xl md:text-4xl text-gray-700 font-bold ">
+            {name}
+          </h2>
+          <button className="block font-bold py-3 px-6 mt-4 md:mt-0 rounded-full bg-nav text-white hover:bg-btnHover hover:text-gray-700 duration-300">
+            PDF
+          </button>
+        </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4  gap-5">
           <div className="md:col-span-1 lg:col-span-3">
             <p className="text-gray-500">{Description}</p>
@@ -88,9 +94,9 @@ const CourseDetails = () => {
               <button className="block font-bold my-5 py-3 w-full rounded-full bg-btnHover text-gray-700 ">
                 Registration
               </button>
-              <Link to="/congratulation">
+              <Link to={`/checkout/${_id}`}>
                 <button className="block font-bold py-3 w-full rounded-full bg-nav text-white ">
-                  Buy Now
+                  Get Premium
                 </button>
               </Link>
             </div>

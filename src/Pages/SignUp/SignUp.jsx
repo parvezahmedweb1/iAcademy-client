@@ -2,11 +2,14 @@ import Lottie from "lottie-react";
 import React, { useContext, useState } from "react";
 import { BiErrorCircle } from "react-icons/bi";
 import { FaGithub } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import signupImg from "../../assets/login-signup/signup.json";
 import { AuthContext } from "../../context/UserContext";
 const SignUp = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const {
     registerEmailAndPassword,
     updateUserProfile,
@@ -18,6 +21,7 @@ const SignUp = () => {
     name: "",
     email: "",
     password: "",
+    photoURL: "",
   });
   const [err, setErr] = useState({
     password: "",
@@ -41,6 +45,10 @@ const SignUp = () => {
       setUserInfo({ ...userInfo, password: e.target.value });
     }
   };
+  // ? handlePhotoUrl
+  const handlePhotoUrl = (e) => {
+    setUserInfo({ ...userInfo, photoURL: e.target.value });
+  };
   // ? handleRegisterSubmit
   const handleRegisterSubmit = (e) => {
     const form = e.target;
@@ -49,9 +57,10 @@ const SignUp = () => {
     registerEmailAndPassword(userInfo.email, userInfo.password)
       .then((result) => {
         toast.success("Successfully Created user");
+        navigate(from, { replace: true });
         setErr({ ...err, firebaseErr: "" });
         // ? update user profile
-        updateUserProfile(userInfo.name)
+        updateUserProfile(userInfo.name, userInfo.photoURL)
           .then(() => {
             // ? email verification
             emailVerification().then(() => {
@@ -68,6 +77,7 @@ const SignUp = () => {
     googleSignIn()
       .then((result) => {
         toast.success("Successfully Google SignUp user");
+        navigate(from, { replace: true });
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
   };
@@ -76,6 +86,7 @@ const SignUp = () => {
     githubSignIn()
       .then((result) => {
         toast.success("Successfully Github SignUp user");
+        navigate(from, { replace: true });
       })
       .catch((err) => setErr({ ...err, firebaseErr: err.message }));
   };
@@ -100,7 +111,7 @@ const SignUp = () => {
                     htmlFor="userName"
                     className="block text-sm text-white-800 dark:text-gray-200"
                   >
-                    Username <sup className="text-yellow-400">*</sup>
+                    Full Name <sup className="text-yellow-400">*</sup>
                   </label>
                   <input
                     onBlur={handleUserName}
@@ -158,6 +169,22 @@ const SignUp = () => {
                       {err.firebaseErr}
                     </span>
                   )}
+                </div>
+                <div className="mt-4">
+                  <label
+                    htmlFor="userName"
+                    className="block text-sm text-white-800 dark:text-gray-200"
+                  >
+                    Photo URL
+                    <sup className="text-yellow-400">*</sup>
+                  </label>
+                  <input
+                    onBlur={handlePhotoUrl}
+                    type="text"
+                    placeholder="Photo URL"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    required
+                  />
                 </div>
                 <div className="mt-4">
                   <button

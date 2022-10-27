@@ -8,7 +8,7 @@ import {
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import logo from "../../assets/logo.png";
 const NavMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -30,10 +30,9 @@ const NavMobile = () => {
             : "absolute left-[-100%]"
         }
       >
-        <a href="/">
-          {/* <img src={logo} alt="" /> */}
-          <span className="text-xl font-bold">iAcademy</span>
-        </a>
+        <Link to="/">
+          <img src={logo} alt="" width="140" />
+        </Link>
         <ul className="block text-center space-y-4 mt-10">
           <li>
             <Link to="/home">Home</Link>
@@ -42,7 +41,7 @@ const NavMobile = () => {
             <Link to="/courses">Courses</Link>
           </li>
           <li>
-            <a href="/faq">Faq</a>
+            <a href="/faq">FAQ</a>
           </li>
           <li>
             <a href="/blogs">Blogs</a>

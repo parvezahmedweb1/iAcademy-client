@@ -31,7 +31,7 @@ const CourseCard = ({ course }) => {
 
         <Link to={`/details/${_id}`}>
           <button className="bg-btnHover text-gray-700 w-full px-10 py-2 mt-4 rounded-full font-bold hover:bg-step hover:text-white transition-all delay-75">
-            Get Premium
+            Details
           </button>
         </Link>
       </div>
