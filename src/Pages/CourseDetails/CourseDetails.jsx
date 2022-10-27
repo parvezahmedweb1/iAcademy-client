@@ -4,10 +4,10 @@ import {
   UserGroupIcon,
   VideoCameraIcon,
 } from "@heroicons/react/24/solid";
-import React from "react";
+import React, { useRef } from "react";
 import { BsFillStarFill } from "react-icons/bs";
 import { Link, useLoaderData } from "react-router-dom";
-
+import { useReactToPrint } from "react-to-print";
 const CourseDetails = () => {
   const courseDetail = useLoaderData();
   const {
@@ -21,15 +21,23 @@ const CourseDetails = () => {
     price,
     _id,
   } = courseDetail;
-  console.log(courseDetail);
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "emp-data",
+    onafterprint: () => alert("Print Success"),
+  });
   return (
     <section className="mb-20 mt-8">
-      <div className="container mx-auto">
+      <div ref={componentRef} className="container mx-auto">
         <div className="flex  flex-col md:flex-row  justify-between items-center mb-10">
           <h2 className="text-3xl md:text-4xl text-gray-700 font-bold ">
             {name}
           </h2>
-          <button className="block font-bold py-3 px-6 mt-4 md:mt-0 rounded-full bg-nav text-white hover:bg-btnHover hover:text-gray-700 duration-300">
+          <button
+            onClick={handlePrint}
+            className="block font-bold py-3 px-6 mt-4 md:mt-0 rounded-full bg-nav text-white hover:bg-btnHover hover:text-gray-700 duration-300"
+          >
             PDF
           </button>
         </div>
@@ -84,12 +92,12 @@ const CourseDetails = () => {
             </ul>
           </div>
           <div className="">
-            <div class="relative block rounded-xl  p-8 shadow-xl">
-              <span class="absolute right-4 top-4 text-xl rounded-full bg-btnHover px-5 py-2  font-extrabold text-nav">
+            <div className="relative block rounded-xl  p-8 shadow-xl">
+              <span className="absolute right-4 top-4 text-xl rounded-full bg-btnHover px-5 py-2  font-extrabold text-nav">
                 {price}
               </span>
-              <div class="mt-4 text-gray-500 sm:pr-8">
-                <h3 class="mt-5 text-xl font-bold text-gray-900">{name}</h3>
+              <div className="mt-4 text-gray-500 sm:pr-8">
+                <h3 className="mt-5 text-xl font-bold text-gray-900">{name}</h3>
               </div>
               <button className="block font-bold my-5 py-3 w-full rounded-full bg-btnHover text-gray-700 ">
                 Registration
