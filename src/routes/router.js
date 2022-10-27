@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Courses from "../layout/Courses";
 import Main from "../layout/Main";
 import AllCourses from "../Pages/AllCourses/AllCourses";
+import Blogs from "../Pages/Blogs/Blogs";
 import Checkout from "../Pages/Checkout/Checkout";
 import Contact from "../Pages/Contact/Contact";
 import CourseDetails from "../Pages/CourseDetails/CourseDetails";
@@ -34,13 +35,15 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/courses",
-            loader: () => fetch("http://localhost:5000/courses"),
+            loader: () => fetch("https://iacademy-server.vercel.app/courses"),
             element: <AllCourses />,
           },
           {
             path: "/courses/:id",
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/categories/${params.id}`),
+              fetch(
+                `https://iacademy-server.vercel.app/categories/${params.id}`
+              ),
             element: <CoursesByCategories />,
           },
         ],
@@ -48,12 +51,16 @@ export const router = createBrowserRouter([
       {
         path: "/details/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/courses/${params.id}`),
+          fetch(`https://iacademy-server.vercel.app/courses/${params.id}`),
         element: <CourseDetails />,
       },
       {
         path: "/faq",
         element: <Faq />,
+      },
+      {
+        path: "/blogs",
+        element: <Blogs />,
       },
       {
         path: "/contact",
@@ -62,7 +69,7 @@ export const router = createBrowserRouter([
       {
         path: "/checkout/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/checkout/${params.id}`),
+          fetch(`https://iacademy-server.vercel.app/checkout/${params.id}`),
         element: (
           <PrivateRouter>
             <Checkout />

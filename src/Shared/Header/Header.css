@@ -3,3 +3,6 @@
   background-position: left;
   object-fit: cover;
 }
+.activeClassName {
+  color: black;
+}

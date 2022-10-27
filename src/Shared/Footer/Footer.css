@@ -1,3 +1,8 @@
 .scroll svg {
   width: 100%;
 }
+.footer {
+  background-image: url("../../assets/navbg.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+}
