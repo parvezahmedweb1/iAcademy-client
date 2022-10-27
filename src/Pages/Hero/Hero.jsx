@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import hero from "../../assets/hero_illustr.svg";
 import "./Hero.css";
@@ -32,9 +33,11 @@ const Hero = () => {
             With over 1200 courses in 18 subjects, you're guaranteed <br />
             to find something that's right for you.
           </p>
-          <button className="bg-btnHover text-black px-10 py-3 rounded-full font-bold hover:bg-white transition-all delay-75">
-            View Our Courses
-          </button>
+          <Link to="/courses">
+            <button className="bg-btnHover text-black px-10 py-3 rounded-full font-bold hover:bg-white transition-all delay-75">
+              View Our Courses
+            </button>
+          </Link>
         </div>
         <div className="mt-5 hidden md:block">
           <img src={hero} alt="" />
