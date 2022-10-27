@@ -4,15 +4,15 @@ This is a Website for iAcademy build with React JS.
 
 ## Live Site
 
-Firebase Link: [iAcademy](https://code-quiz-assignment.netlify.app/)
+Firebase Link: [iAcademy](https://iaccademy.web.app/)
 
-Code :
+Code : [github](https://github.com/programming-hero-web-course1/b610-learning-platform-client-side-parvezahmedweb1)
 
 ## Server Site
 
 Versel Link: [iAcademy](https://iacademy-server.vercel.app/)
 
-Code Link:
+Code Link: [github](https://github.com/programming-hero-web-course1/b610-lerning-platform-server-side-parvezahmedweb1)
 
 ## Features
 
