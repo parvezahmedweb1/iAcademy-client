@@ -36,13 +36,15 @@ const Header = () => {
           {/* info */}
           <div className="md:flex hidden">
             {user?.uid && (
-              <img
-                title={user.displayName}
-                className="mr-5 rounded-full cursor-pointer"
-                src={user.photoURL ? user.photoURL : man}
-                width="40"
-                alt=""
-              />
+              <Link to="/profile">
+                <img
+                  title={user.displayName}
+                  className="mr-5 rounded-full cursor-pointer"
+                  src={user?.photoURL ? user.photoURL : man}
+                  width="40"
+                  alt=""
+                />
+              </Link>
             )}
             {user?.uid ? (
               <button

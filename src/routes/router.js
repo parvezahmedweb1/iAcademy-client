@@ -6,6 +6,7 @@ import CourseDetails from "../Pages/CourseDetails/CourseDetails";
 import CoursesByCategories from "../Pages/CoursesByCategories/CoursesByCategories";
 import Home from "../Pages/Home/Home";
 import Congratulation from "../Pages/Others/Congratulation";
+import Profile from "../Pages/Profile/Profile";
 import SignIn from "../Pages/SignIn/SignIn";
 import SignUp from "../Pages/SignUp/SignUp";
 
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <SignIn />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
       {
         path: "/register",
