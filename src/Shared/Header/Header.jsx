@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import man from "../../assets/man.png";
 import { AuthContext } from "../../context/UserContext";
 import NavMobile from "../../Pages/Others/NavMobile";
 import "./Header.css";
@@ -19,7 +20,7 @@ const Header = () => {
                 <Link to="/home">Home</Link>
               </li>
               <li>
-                <a href="/courses">Courses</a>
+                <Link to="/courses">Courses</Link>
               </li>
               <li>
                 <a href="/faq">Faq</a>
@@ -33,7 +34,16 @@ const Header = () => {
             </ul>
           </nav>
           {/* info */}
-          <div className="md:block hidden">
+          <div className="md:flex hidden">
+            {user?.uid && (
+              <img
+                title={user.displayName}
+                className="mr-5 rounded-full cursor-pointer"
+                src={user.photoURL ? user.photoURL : man}
+                width="40"
+                alt=""
+              />
+            )}
             {user?.uid ? (
               <button
                 onClick={logout}

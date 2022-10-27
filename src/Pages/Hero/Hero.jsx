@@ -7,14 +7,16 @@ const Hero = () => {
     <section id="hero" className="md:h-[90vh] h-[50vh]">
       <div className="container mx-auto h-full flex justify-center md:justify-between items-center">
         <div className="text-white text-center md:text-left">
-          <h1 className="text-5xl font-bold">
+          <h1 className="text-3xl md:text-5xl font-bold">
             iAcademy Premium <br />
             <Typewriter
               words={[
                 "Web Development",
-                "Graphic  Design",
-                "Digital Marketing",
-                "Facebook Marketing",
+                "App Development",
+                "Machine Learning",
+                "Software Engineering",
+                "UI/UX Design",
+                "Graphic Design",
               ]}
               loop={true}
               cursor

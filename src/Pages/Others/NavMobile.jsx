@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const NavMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,10 +36,10 @@ const NavMobile = () => {
         </a>
         <ul className="block text-center space-y-4 mt-10">
           <li>
-            <a href="/home">Home</a>
+            <Link to="/home">Home</Link>
           </li>
           <li>
-            <a href="/courses">Courses</a>
+            <Link to="/courses">Courses</Link>
           </li>
           <li>
             <a href="/faq">Faq</a>
